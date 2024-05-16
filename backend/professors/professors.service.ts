@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { Professor } from './professors.model';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
@@ -26,24 +26,44 @@ export class ProfessorsService {
         return professors;
     }
 
-    async updateProfessor(professor:Professor){
-        const updateProfessor = await this.professorModel.findOne({name: professor.name});
-        if (!updateProfessor){
-            throw new NotFoundException('Could not find the professor.');
+
+    
+
+    async updateProfessor(tia: string, professorData: Professor): Promise<Professor> {
+        try {
+          const updatedProfessor = await this.professorModel.findOneAndUpdate(
+            { tia }, 
+            professorData,
+            { new: true } // Retorna o documento atualizado
+          ).exec();
+    
+          if (!updatedProfessor) {
+            throw new NotFoundException('Professor não encontrado');
+          }
+    
+          return updatedProfessor; 
+        } catch (error) {
+          // Log do erro para facilitar a depuração
+          console.error('Erro ao atualizar professor:', error);
+          throw new InternalServerErrorException('Erro ao atualizar professor'); 
         }
-        if (professor.courses){
-            updateProfessor.courses = professor.courses
-        }
-        if (professor.subject){
-            updateProfessor.subject = professor.subject
-        }
-        updateProfessor.save()
     }
 
+  /* 
     async deleteProfessor(name: string){
         const result = await this.professorModel.deleteOne({name: name}).exec();
         if (result.deletedCount === 0){
             throw new NotFoundException('Could not delete the professor');
         }
+    }
+*/
+
+
+    async deleteProfessor(tia: string ){
+     const result = await this.professorModel.deleteOne({ tia: tia }).exec();
+        if (result.deletedCount === 0){
+            throw new NotFoundException('Could not delete the professor');
+        }
+
     }
 }

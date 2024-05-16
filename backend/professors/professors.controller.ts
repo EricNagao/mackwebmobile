@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Patch, Delete, Param } from '@nestjs/common';
+import { Body, Controller, Get, Post, Patch, Delete, Param, HttpCode } from '@nestjs/common';
 import { Professor } from './professors.model';
 import { ProfessorsService } from './professors.service';
 
@@ -15,7 +15,7 @@ export class ProfessorsController {
             tia: professor.tia,
             courses: professor.courses,
             subject: professor.subject
-                }));
+            }));
     }
 
     @Post()
@@ -23,15 +23,28 @@ export class ProfessorsController {
         var response = await this.professorService.createProfessor(professor);
         return {id: response};
     }
+    
 
-    @Patch()
-    async updateProfessor( @Body() professor: Professor){
-        await this.professorService.updateProfessor(professor);
+    @Patch(':tia')
+    @HttpCode(200) 
+    async updateProfessor(@Param('tia') tia: string, @Body() professorData: Professor): Promise<Professor> {
+      const updatedProfessor = await this.professorService.updateProfessor(tia, professorData);
+      return updatedProfessor; 
     }
 
+
+
+/*
     @Delete(':name')
     async deleteProfessor(@Param('name') name: string){
         await this.professorService.deleteProfessor(name);
+        return "deletado";
+    }
+  */  
+    @Delete(':tia')
+    async deleteProfessor(@Param('tia') tia: string){
+        await this.professorService.deleteProfessor(tia);
         return null;
     }
+
 }

@@ -1,39 +1,37 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset='utf-8'/>
-        <title>Integração</title>
-        <link rel="stylesheet" type="text/css" href="css/style.css"/>
-        <script src="js/main.js"></script>
-    </head>
-    <header>
-        <h1>Sistema de Cadastro de Professores</h1>
-    </header>
-    <body>
+<head>
+  <meta charset='utf-8' />
+  <title>Integração</title>
+  <link rel="stylesheet" type="text/css" href="css/style.css" /> 
+</head>
+<body>
+  <header>
+    <h1>Sistema de Cadastro de Professores</h1>
+  </header>
 
-        <form>
-            <p>
-                <label for="name">Name:</label><br>
-                <input type="text" id="name"/>
-            </p>
-            <p>
-                <label for="tia">TIA:</label><br>
-                <input type="text" id="tia"/>
-            </p>
-            <p>
-                <label for="courses">Course:</label><br>
-                <input type="text" id="courses"/>
-            </p>
-             <p>
-                <label for="subject">Course:</label><br>
-                <input type="text" id="subject"/>
-            </p>
-            <button id='button' onclick="createProfessor()">Inserir</button>
-        </form>
+  <form>
+    <p>
+      <label for="name">Nome:</label><br>
+      <input type="text" id="name" />
+    </p>
+    <p>
+      <label for="tia">TIA:</label><br>
+      <input type="text" id="tia" /> 
+    </p>
+    <p>
+      <label for="courses">Cursos:</label><br>
+      <input type="text" id="courses" /> 
+    </p>
+    <p>
+      <label for="subject">Disciplina:</label><br>
+      <input type="text" id="subject" />
+    </p>
+    <button id='button' type="button" onclick="createProfessor()">Inserir</button> 
+  </form>
 
-        
-        <section id='content'></section> 
+  <section id='content'></section> 
 
-    </body>
+  <script src="js/main.js"></script> 
+</body>
 </html>
-        
